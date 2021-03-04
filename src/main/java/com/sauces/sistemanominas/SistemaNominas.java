@@ -8,6 +8,7 @@ package com.sauces.sistemanominas;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -16,7 +17,9 @@ import java.util.Iterator;
  */
 public class SistemaNominas {
     private List<Empleado> empleados;
-
+    /**
+     * Permite incluir empleados en el sistema de nominas
+    */
     public SistemaNominas() {
     empleados=new ArrayList<>();
     }
@@ -45,5 +48,20 @@ public class SistemaNominas {
     public List<Empleado>listarEmpleados(){
     Collections.sort(empleados);
         return empleados;
+    }
+    public List<Empleado>listarEmpleadosPorSueldo(){
+     List<Empleado> listado=new ArrayList<>();
+   
+     Collections.copy(empleados, listado);
+     Collections.sort(listado,new ComparadorSueldo());
+        return listado;
+    }
+    public float getTotalSalarios(){
+        float acumulador=0;
+        Iterator<Empleado> iterador=empleados.iterator();
+        while(iterador.hasNext()){
+            acumulador+=iterador.next().ingresos();
+        }
+        return acumulador;
     }
 }

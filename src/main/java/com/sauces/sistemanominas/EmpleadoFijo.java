@@ -18,6 +18,14 @@ public class EmpleadoFijo extends Empleado {
         this.salario = salario;
     }
 
+    public float getSalario() {
+        return salario;
+    }
+
+    public void setSalario(float salario) {
+        this.salario = salario;
+    }
+   
     @Override
     public String toString() {
         return super.toString()+","+salario; //To change body of generated methods, choose Tools | Templates.
