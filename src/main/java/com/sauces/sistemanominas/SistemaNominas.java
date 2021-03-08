@@ -25,7 +25,7 @@ public class SistemaNominas {
     }
     public boolean incluirEmpleado(Empleado empleado){
         boolean incluido=false;
-        if(empleados.contains(empleado)){
+        if(!empleados.contains(empleado)){
             empleados.add(empleado);
             incluido=true;
         }
