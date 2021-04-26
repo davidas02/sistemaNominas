@@ -17,6 +17,7 @@ import java.util.Iterator;
  */
 public class SistemaNominas {
     private List<Empleado> empleados;
+    
     /**
      * Permite incluir empleados en el sistema de nominas
     */

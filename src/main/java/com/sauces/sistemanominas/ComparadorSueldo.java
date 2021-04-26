@@ -15,11 +15,11 @@ import java.util.List;
  * @author daw1
  */
 public class ComparadorSueldo implements Comparator<Empleado>{
-    public int compare(Empleado o1, Empleado o2) {
+    public int compare(Empleado e1, Empleado e2) {
         int salida = 0;
         float ingresos1, ingresos2;
-        ingresos1 = o1.ingresos();
-        ingresos2 = o2.ingresos();
+        ingresos1 = e1.ingresos();
+        ingresos2 = e2.ingresos();
         if (ingresos1 < ingresos2) {
             salida = -1;
         } else {
