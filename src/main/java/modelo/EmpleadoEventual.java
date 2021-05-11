@@ -1,4 +1,4 @@
-package com.sauces.sistemanominas;
+package modelo;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

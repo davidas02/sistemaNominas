@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sauces.sistemanominas;
+package controlador;
 
 /**
  *
- * @author daw1
+ * @author PC
  */
-public class DaoException extends Exception {
-
-    public DaoException(String message) {
-    super (message);
-    }
+public class Controlador {
     
 }
