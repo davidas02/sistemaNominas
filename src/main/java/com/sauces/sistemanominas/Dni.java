@@ -6,6 +6,8 @@
 package com.sauces.sistemanominas;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -14,10 +16,11 @@ import java.util.Objects;
 public class Dni implements Comparable<Dni> {
   private String dni;
 
-    public Dni(String dni) {
+    public Dni(String dni)throws DniException{
         if(!esValido(dni)){
-        new DniException;
+        throw new DniException("DNI incorrecto");
         }
+        this.dni=dni;
     }
 
     public String getDni() {
@@ -62,7 +65,23 @@ public class Dni implements Comparable<Dni> {
     public int compareTo(Dni o) {
         return this.dni.compareTo(o.dni);
     }
-    public static boolean esValido(String dni){
-    
+    private boolean esValido(String dni){
+        boolean esValido=false;
+        int resto;
+        char letra;
+        String letras="QWERTYUIOPASDFGHJKLÑMNBVCXZ";
+        String er="([0-9]{8})([A-Z])";
+        Pattern p=Pattern.compile(er);
+        Matcher m=p.matcher(dni);
+        if(m.matches()){
+            resto=Integer.parseInt(m.group(1))%23;
+            letra=letras.charAt(resto);
+            if(letra==dni.charAt(8)){
+                    esValido=true;
+            }
+       
+        }
+        return esValido;
+   
     }
 }

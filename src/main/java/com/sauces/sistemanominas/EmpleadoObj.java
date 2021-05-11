@@ -5,11 +5,16 @@
  */
 package com.sauces.sistemanominas;
 
+import java.io.EOFException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,10 +24,10 @@ import java.util.logging.Logger;
  * @author daw1
  */
 public class EmpleadoObj implements EmpleadoDao{
- private Path path;   
+    private Path path;
 
-    public EmpleadoObj(Path path) {
-       path=Paths.get(path);
+    public EmpleadoObj(String path) {
+        this.path = Paths.get(path);
     }
 
     public Path getPath() {
@@ -36,7 +41,24 @@ public class EmpleadoObj implements EmpleadoDao{
 
     @Override
     public List<Empleado> listar() throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Empleado> lista = new ArrayList<>();
+        Empleado empleado;
+        try(InputStream inputS=Files.newInputStream(path);
+                ObjectInputStream entrada = new ObjectInputStream(inputS);){
+            while(inputS.available() > 0){
+                empleado=(Empleado)entrada.readObject();
+                lista.add(empleado);
+            }
+        }catch(EOFException eofe){
+            System.out.println("Fin de fichero");
+        }catch(ClassNotFoundException cnfe){
+            System.out.println("Objeto no esperado");
+        }catch(FileNotFoundException fnfe){
+            System.out.println("No existe el fichero");
+        }catch(IOException ioe){
+            System.out.println("Error de entrada/salida");
+        }  
+        return lista;
     }
 
     @Override

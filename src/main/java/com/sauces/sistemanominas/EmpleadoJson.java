@@ -7,7 +7,12 @@ package com.sauces.sistemanominas;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,31 +21,58 @@ import java.util.List;
  */
 public class EmpleadoJson implements EmpleadoDao {
 
-    private Path path;
+    Path path;
 
-    public EmpleadoJson(Path path) {
+    public EmpleadoJson(String path) {
+        this.path = Paths.get(path);
+    }
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
         this.path = path;
     }
 
     @Override
     public List<Empleado> listar() throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Empleado> listado=new ArrayList<>();
+        java.lang.reflect.Type tipo = new com.google.gson.reflect.TypeToken<List<Empleado>>(){}.getType();
+        RuntimeTypeAdapterFactory<Empleado> vehiculoAdapter = RuntimeTypeAdapterFactory.of(Empleado.class, "type");
+        vehiculoAdapter.registerSubtype(EmpleadoFijo.class, "Empleado Fijo");
+        vehiculoAdapter.registerSubtype(EmpleadoEventual.class, "Empleado Eventual");
+        GsonBuilder builder=new GsonBuilder();
+        builder.setPrettyPrinting();
+        builder.registerTypeAdapterFactory(vehiculoAdapter);
+        Gson gson=builder.create();
+        try(BufferedReader fichero=Files.newBufferedReader(path)){
+        listado=gson.fromJson(fichero, tipo);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        return listado;
     }
 
     @Override
     public int insertar(List<Empleado> listado) throws DaoException {
-        //Definimos un tipo para poder trabajar con colecciones
-        java.lang.reflect.Type tipo = new com.google.gson.reflect.TypeToken<List<Empleado>>() {
-        }.getType();
-        //registramos las clases hijas
+       int n=0;
+        List<Empleado> empleados=new ArrayList<>();
+        java.lang.reflect.Type tipo = new com.google.gson.reflect.TypeToken<List<Empleado>>(){}.getType();
         RuntimeTypeAdapterFactory<Empleado> empleadoAdapter = RuntimeTypeAdapterFactory.of(Empleado.class, "type");
-        empleadoAdapter.registerSubtype(EmpleadoFijo.class, "Fijo");
-        empleadoAdapter.registerSubtype(EmpleadoEventual.class, "Eventual");
+        empleadoAdapter.registerSubtype(EmpleadoFijo.class, "Empleado Fijo");
+        empleadoAdapter.registerSubtype(EmpleadoEventual.class, "Empleado Eventual");
         GsonBuilder builder=new GsonBuilder();
         builder.setPrettyPrinting();
         builder.registerTypeAdapterFactory(empleadoAdapter);
-        Gson gson = builder.create();
-        try(BufferedWriter fichero=files.newBufferedWriter(path))(Gson.toJson)
+        Gson gson=builder.create();
+         try(BufferedWriter fichero=Files.newBufferedWriter(path)){
+        gson.toJson(listado,tipo,fichero);
+        n=listado.size();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+         return n;
     }
 
 }

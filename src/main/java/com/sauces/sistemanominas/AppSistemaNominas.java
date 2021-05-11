@@ -25,6 +25,7 @@ public class AppSistemaNominas {
         int horas;
         int opcion1, opcion2;
         Empleado e = null;
+         String nombreArchivo;
         do {
             System.out.println("1- Crear Empleado Fijo");
             System.out.println("2- Crear Empleado Eventual");
@@ -99,27 +100,16 @@ public class AppSistemaNominas {
                     System.out.println("El total de los salarios es " + sn.getTotalSalarios());
                     break;
                 case 8:
-                    System.out.println("Introduce el nombre del archivo");
-                    String nombreArchivo = teclado.nextLine();
-                    String extension = "csv";
-                    switch (extension) {
-                        case "csv":
-                            EmpleadoDao empleadoDao = new EmpleadoCsv(nombreArchivo);
-                            break;
-                        case "obj":
-                            break;
-                        case "json":
-                            break;
-                        case "xml":
-                            break;
-                    }
-                    if (EmpleadoDao != null) {
+                     System.out.println("Introduce nombre de archivo: ");
+                        nombreArchivo=teclado.nextLine();
+                        sn.setEmpleadoDao(getDao(nombreArchivo));
                         try {
-                            sn.setEmpleadoDao(EmpleadoDao);
-                            n = sn.cargarEmpleados();
-                        }
-                    }
-                    break;
+                            aa.guardarVehiculos();
+                        }catch (DaoException de) {
+                            System.out.println(de.getMessage());
+                        }                
+                        break;
+                    
                 case 9:
                     System.out.println("Introduce el nombre del archivo");
                     nombreArchivo = teclado.nextLine();
@@ -139,5 +129,19 @@ public class AppSistemaNominas {
             }
         } while (opcion1 != 0);
         System.out.println("Hasta luego");
+    }
+    public static EmpleadoDao getDao(String archivo){
+        String extension=archivo.substring(archivo.lastIndexOf(".")+1);
+        switch(extension){
+            case "obj":
+                return (new EmpleadoObj(archivo));
+            case "csv":
+                return (new EmpleadoCsv(archivo));
+            case "json":
+                return (new EmpleadoJson(archivo));
+            case "xml":
+                return (new EmpleadoXml(archivo));
+        }
+        return null;
     }
 }

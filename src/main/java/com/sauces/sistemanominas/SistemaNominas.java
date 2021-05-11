@@ -17,12 +17,19 @@ import java.util.Iterator;
  */
 public class SistemaNominas {
     private List<Empleado> empleados;
-    
+    private EmpleadoDao empleadoDao;
     /**
      * Permite incluir empleados en el sistema de nominas
     */
     public SistemaNominas() {
     empleados=new ArrayList<>();
+    }
+    public EmpleadoDao getEmpleadoDao() {
+        return empleadoDao;
+    }
+
+    public void setVehiculoDao(EmpleadoDao empleadoDao) {
+        this.empleadoDao = empleadoDao;
     }
     public boolean incluirEmpleado(Empleado empleado){
         boolean incluido=false;
