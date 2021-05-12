@@ -114,7 +114,7 @@ public class AppSistemaNominas {
                         nombreArchivo=teclado.nextLine();
                         sn.setEmpleadoDao(getDao(nombreArchivo));
                         try {
-                            aa.guardarVehiculos();
+                            sn.guardarEmpleados();
                         }catch (DaoException de) {
                             System.out.println(de.getMessage());
                         }                
@@ -123,7 +123,7 @@ public class AppSistemaNominas {
                 case 9:
                     System.out.println("Introduce el nombre del archivo");
                     nombreArchivo = teclado.nextLine();
-                    extension = "csv";
+                String extension = "csv";
                     switch (extension) {
                         case "csv":
                             EmpleadoDao empleadoDao = new EmpleadoCsv(nombreArchivo);
@@ -136,6 +136,7 @@ public class AppSistemaNominas {
                             break;
                     }
                     break;
+
             }
         } while (opcion1 != 0);
         System.out.println("Hasta luego");
