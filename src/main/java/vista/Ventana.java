@@ -52,7 +52,7 @@ public class Ventana extends javax.swing.JFrame {
         bOrderNombre = new javax.swing.JRadioButton();
         bOrderIngresos = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaEmpleados = new javax.swing.JTable();
         menuSuperior = new javax.swing.JMenuBar();
         miArchivo = new javax.swing.JMenu();
         miAbrir = new javax.swing.JMenuItem();
@@ -67,6 +67,7 @@ public class Ventana extends javax.swing.JFrame {
 
         lDni.setText("DNI");
 
+        tDni.setEditable(false);
         tDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tDniActionPerformed(evt);
@@ -74,6 +75,8 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         lNombre.setText("NOMBRE");
+
+        tNombre.setEditable(false);
 
         lTipo.setText("TIPO");
 
@@ -154,7 +157,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lSalario)
                     .addComponent(tSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 286, Short.MAX_VALUE)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lIngresos)
                     .addComponent(tIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,18 +189,20 @@ public class Ventana extends javax.swing.JFrame {
         gBotones.add(bOrderIngresos);
         bOrderIngresos.setText("INGRESOS");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        etm=new EmpleadoTableModel();
+        tablaEmpleados.setModel(etm);
+        tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "DNI", "NOMBRE", "SALARIO", "HORAS", "INGRESOS"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaEmpleados);
 
         javax.swing.GroupLayout panelListadoLayout = new javax.swing.GroupLayout(panelListado);
         panelListado.setLayout(panelListadoLayout);
@@ -217,8 +222,10 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(panelListadoLayout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addComponent(bListarEmpleados))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addGroup(panelListadoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         panelListadoLayout.setVerticalGroup(
             panelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,8 +233,8 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(bListarEmpleados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(249, 249, 249)
                 .addGroup(panelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lOrder)
                     .addComponent(bOrderDni)
@@ -259,6 +266,11 @@ public class Ventana extends javax.swing.JFrame {
         miEmpleado.setText("Empleado");
 
         miNuevo.setText("Nuevo");
+        miNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNuevoActionPerformed(evt);
+            }
+        });
         miEmpleado.add(miNuevo);
 
         miBuscar.setText("Buscar");
@@ -306,22 +318,36 @@ public class Ventana extends javax.swing.JFrame {
 
     private void miGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarActionPerformed
         // TODO add your handling code here:
-        int SAVE_DIALOG = JFileChooser.SAVE_DIALOG;
+        if(selectorFicheros.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
+            int SAVE_DIALOG = JFileChooser.SAVE_DIALOG;
+        }
+        
     }//GEN-LAST:event_miGuardarActionPerformed
 
     private void miAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAbrirActionPerformed
         // TODO add your handling code here:
         if(selectorFicheros.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
-            
+            int OPEN_DIALOG=JFileChooser.OPEN_DIALOG;
         }
     }//GEN-LAST:event_miAbrirActionPerformed
 
     private void bOrderDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrderDniActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bOrderDniActionPerformed
+
+    private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
+        // TODO add your handling code here:
+        if(this.dialogoEmpleado.mostrar()==DialogoEmpleado.ACEPTAR){
+        this.tDni.setText(dialogoEmpleado.getDni());
+        this.tNombre.setText(dialogoEmpleado.getNombre());
+        this.liTipo.
+        this.tSalario.setText(Float.toString(dialogoEmpleado.getSalario()));
+        controlador.crearEmpleado();
+     }
+    }//GEN-LAST:event_miNuevoActionPerformed
 private Controlador controlador;
 private DialogoEmpleado dialogoEmpleado;
-private EmpleadoTableModel empleadoTM;
+
     public String getTipo() {
         return this.liTipo.toString();
     }
@@ -337,13 +363,42 @@ private EmpleadoTableModel empleadoTM;
     public float getSalario() {
         return Float.parseFloat(this.tSalario.getText());
     }
-
+    /*public String getArchivo(){
+    
+    }*/
+    /*public String getOrden(){
+    }*/
+    public void mostrarTipo(String tipo){
+    
+    }
+    public void mostrarDni(String dni){
+        
+    }
+    public void mostrarNombre(String nombre){
+        
+    }
+    public void mostrarSalario(float salario){
+    
+    }
+    public void mostrarHoras(int horas){
+    
+    }
+    public void mostrarIngresos(float ingresos){
+    
+    }
+    /*public int getHoras(){
+    return Integer.parseInt(this.tHoras.getText());
+    }*/
 
     //metodo que permite fijar el controlador
     public void setControlador(Controlador controlador) {
         this.controlador = controlador;
     }
-    
+    public void limpiarCampos(){
+    this.tDni.setText("");
+    this.tIngresos.setText("");
+    this.tNombre.setText("");
+    }
     public void mostrar(){
     setVisible(true);
     }
@@ -392,7 +447,6 @@ private EmpleadoTableModel empleadoTM;
     private javax.swing.JRadioButton bOrderNombre;
     private javax.swing.ButtonGroup gBotones;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lDni;
     private javax.swing.JLabel lIngresos;
     private javax.swing.JLabel lNombre;
@@ -414,5 +468,7 @@ private EmpleadoTableModel empleadoTM;
     private javax.swing.JTextField tIngresos;
     private javax.swing.JTextField tNombre;
     private javax.swing.JTextField tSalario;
+    private EmpleadoTableModel etm;
+    private javax.swing.JTable tablaEmpleados;
     // End of variables declaration//GEN-END:variables
 }

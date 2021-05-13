@@ -5,18 +5,17 @@
  */
 package vista;
 
-import javax.swing.JFileChooser;
-
 /**
  *
  * @author daw1
  */
-public class DialogoEmpleado extends javax.swing.JFrame {
+public class DialogoEmpleado extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogoEmpleado
      */
-    public DialogoEmpleado() {
+    public DialogoEmpleado(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -31,16 +30,16 @@ public class DialogoEmpleado extends javax.swing.JFrame {
 
         lDni = new javax.swing.JLabel();
         tDni = new javax.swing.JTextField();
-        tNombre = new javax.swing.JTextField();
         lNombre = new javax.swing.JLabel();
+        tNombre = new javax.swing.JTextField();
         lTipo = new javax.swing.JLabel();
         liTipo = new javax.swing.JComboBox<>();
-        tSalario = new javax.swing.JTextField();
         lSalario = new javax.swing.JLabel();
-        lIngresos = new javax.swing.JLabel();
-        tIngresos = new javax.swing.JTextField();
+        tSalario = new javax.swing.JTextField();
+        bAceptar = new javax.swing.JButton();
+        bCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lDni.setText("DNI");
 
@@ -63,11 +62,17 @@ public class DialogoEmpleado extends javax.swing.JFrame {
 
         lSalario.setText("SALARIO");
 
-        lIngresos.setText("INGRESOS");
-
-        tIngresos.addActionListener(new java.awt.event.ActionListener() {
+        bAceptar.setText("ACEPTAR");
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tIngresosActionPerformed(evt);
+                bAceptarActionPerformed(evt);
+            }
+        });
+
+        bCancelar.setText("CANCELAR");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
             }
         });
 
@@ -76,34 +81,37 @@ public class DialogoEmpleado extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lNombre)
-                            .addComponent(lDni))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tDni)
-                            .addComponent(tNombre)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lNombre)
+                                    .addComponent(lDni))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tDni)
+                                    .addComponent(tNombre)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lSalario)
+                                    .addComponent(lTipo))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tSalario)
+                                    .addComponent(liTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(194, 194, 194))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lSalario)
-                            .addComponent(lTipo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tSalario)
-                            .addComponent(liTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lIngresos)
-                        .addGap(3, 3, 3)
-                        .addComponent(tIngresos)))
-                .addGap(172, 172, 172))
+                        .addComponent(bAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bCancelar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lDni)
                     .addComponent(tDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -119,11 +127,11 @@ public class DialogoEmpleado extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lSalario)
                     .addComponent(tSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lIngresos)
-                    .addComponent(tIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64))
+                    .addComponent(bAceptar)
+                    .addComponent(bCancelar))
+                .addContainerGap())
         );
 
         pack();
@@ -137,15 +145,26 @@ public class DialogoEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_liTipoActionPerformed
 
-    private void tIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tIngresosActionPerformed
+    private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tIngresosActionPerformed
+        opcion = ACEPTAR;
+        setVisible(false);
+    }//GEN-LAST:event_bAceptarActionPerformed
+
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        // TODO add your handling code here:
+        opcion = CANCELAR;
+        setVisible(false);
+    }//GEN-LAST:event_bCancelarActionPerformed
+    public final static int ACEPTAR = 1;
+    public final static int CANCELAR = 0;
+    private int opcion;
 
     /**
      * @param args the command line arguments
      */
     public String getTipo() {
-        return this.liTipo.getText();
+        return this.liTipo.toString();
     }
 
     public String getDni() {
@@ -160,8 +179,10 @@ public class DialogoEmpleado extends javax.swing.JFrame {
         return Float.parseFloat(this.tSalario.getText());
     }
 
-    public void mostrar() {
+    public int mostrar() {
+       opcion=CANCELAR;
         setVisible(true);
+        return opcion;
     }
 
     public static void main(String args[]) {
@@ -188,23 +209,30 @@ public class DialogoEmpleado extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DialogoEmpleado().setVisible(true);
+                DialogoEmpleado dialog = new DialogoEmpleado(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAceptar;
+    private javax.swing.JButton bCancelar;
     private javax.swing.JLabel lDni;
-    private javax.swing.JLabel lIngresos;
     private javax.swing.JLabel lNombre;
     private javax.swing.JLabel lSalario;
     private javax.swing.JLabel lTipo;
     private javax.swing.JComboBox<String> liTipo;
     private javax.swing.JTextField tDni;
-    private javax.swing.JTextField tIngresos;
     private javax.swing.JTextField tNombre;
     private javax.swing.JTextField tSalario;
     // End of variables declaration//GEN-END:variables

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.4" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="gBotones">
     </Component>
@@ -40,6 +40,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miNuevoActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miBuscar">
               <Properties>
@@ -178,7 +181,7 @@
                       <Component id="lSalario" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tSalario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="286" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lIngresos" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tIngresos" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -200,6 +203,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tDni">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tDniActionPerformed"/>
           </Events>
@@ -210,6 +216,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tNombre">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lTipo">
           <Properties>
@@ -289,9 +298,12 @@
                           <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                           <Component id="bListarEmpleados" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" alignment="0" min="-2" pref="453" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -301,8 +313,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="bListarEmpleados" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="321" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="178" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="249" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lOrder" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="bOrderDni" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -360,17 +372,22 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="tablaEmpleados">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                  <Table columnCount="5" rowCount="4">
+                    <Column editable="true" title="DNI" type="java.lang.Object"/>
+                    <Column editable="true" title="NOMBRE" type="java.lang.Object"/>
+                    <Column editable="true" title="SALARIO" type="java.lang.Object"/>
+                    <Column editable="true" title="HORAS" type="java.lang.Object"/>
+                    <Column editable="true" title="INGRESOS" type="java.lang.Object"/>
                   </Table>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="private EmpleadoTableModel etm;"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="etm=new EmpleadoTableModel();&#xa;tablaEmpleados.setModel(etm);"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

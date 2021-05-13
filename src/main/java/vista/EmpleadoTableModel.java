@@ -29,31 +29,30 @@ class EmpleadoTableModel {
         return listado.size();
     }
 
-    @Override
     public int getColumnCount() {
        return columnas.length;
     }
 
-    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Empleado e=listado.get(rowIndex);
         Object o=null;
         switch(columnIndex){
-           case 0:o=e.getCodigo();
+           case 0:o=e.getDni();
             break;
-           case 1:o=e.getTitular();
+           case 1:o=e.getNombre();
             break;
-           case 2:o=e.getSaldo();
+           case 2:o=e.getSalario();
            break;
+           case 3:o=e.getHoras();
+           break;
+           case 4: o=e.getIngresos();
         }
         return o;
     }
-    @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return false;
     }
     
-    @Override
     public Class<?> getColumnClass(int columnIndex) {
         Class<?> clase=null;
         switch(columnIndex){
@@ -61,12 +60,11 @@ class EmpleadoTableModel {
             break;
             case 1: clase=String.class;
             break;
-            case 2: clase=Float.class;
+            case 2: clase=String.class;
         }
                return clase;
     }
 
-    @Override
     public String getColumnName(int column) {
         return columnas[column];
     }
