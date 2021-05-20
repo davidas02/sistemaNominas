@@ -14,19 +14,19 @@ import java.util.regex.Pattern;
  * @author daw1
  */
 public abstract class Empleado implements Comparable<Empleado> {
-    private String dni;
+    private Dni dni;
     private String nombre;
 
-    public Empleado(String dni, String nombre) {
+    public Empleado(Dni dni, String nombre) {
         this.dni = dni;
         this.nombre = nombre;
     }
 
-    public String getDni() {
+    public Dni getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
+    public void setDni(Dni dni) {
         this.dni = dni;
     }
 

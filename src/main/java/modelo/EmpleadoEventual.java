@@ -30,7 +30,7 @@ public class EmpleadoEventual extends Empleado {
         this.horas = horas;
     }
 
-    public EmpleadoEventual( String dni, String nombre,float salarioHora, int horas) {
+    public EmpleadoEventual( Dni dni, String nombre,float salarioHora, int horas) {
         super(dni, nombre);
         this.salarioHora = salarioHora;
         this.horas = horas;

@@ -38,6 +38,8 @@ public class DialogoEmpleado extends javax.swing.JDialog {
         tSalario = new javax.swing.JTextField();
         bAceptar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
+        lHoras = new javax.swing.JLabel();
+        sHoras = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -54,6 +56,11 @@ public class DialogoEmpleado extends javax.swing.JDialog {
         lTipo.setText("TIPO");
 
         liTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FIJO", "EVENTUAL" }));
+        liTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                liTipoItemStateChanged(evt);
+            }
+        });
         liTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 liTipoActionPerformed(evt);
@@ -76,6 +83,8 @@ public class DialogoEmpleado extends javax.swing.JDialog {
             }
         });
 
+        lHoras.setText("HORAS");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,8 +93,17 @@ public class DialogoEmpleado extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addComponent(bAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bCancelar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lHoras)
+                                .addGap(18, 18, 18)
+                                .addComponent(sHoras))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lNombre)
                                     .addComponent(lDni))
@@ -93,7 +111,7 @@ public class DialogoEmpleado extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tDni)
                                     .addComponent(tNombre)))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lSalario)
                                     .addComponent(lTipo))
@@ -101,12 +119,7 @@ public class DialogoEmpleado extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tSalario)
                                     .addComponent(liTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(194, 194, 194))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bAceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bCancelar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(194, 194, 194))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +140,11 @@ public class DialogoEmpleado extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lSalario)
                     .addComponent(tSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lHoras)
+                    .addComponent(sHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bAceptar)
                     .addComponent(bCancelar))
@@ -143,12 +160,15 @@ public class DialogoEmpleado extends javax.swing.JDialog {
 
     private void liTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liTipoActionPerformed
         // TODO add your handling code here:
+       
     }//GEN-LAST:event_liTipoActionPerformed
 
     private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
         // TODO add your handling code here:
+        if(this.tDni.getText().trim().length()>0){
         opcion = ACEPTAR;
         setVisible(false);
+        }
     }//GEN-LAST:event_bAceptarActionPerformed
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
@@ -156,6 +176,17 @@ public class DialogoEmpleado extends javax.swing.JDialog {
         opcion = CANCELAR;
         setVisible(false);
     }//GEN-LAST:event_bCancelarActionPerformed
+
+    private void liTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_liTipoItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getItem().equals("FIJO")){
+            lHoras.setVisible(false);
+            sHoras.setVisible(false);
+        }else{
+            lHoras.setVisible(true);
+            sHoras.setVisible(true);
+        }
+    }//GEN-LAST:event_liTipoItemStateChanged
     public final static int ACEPTAR = 1;
     public final static int CANCELAR = 0;
     private int opcion;
@@ -178,9 +209,14 @@ public class DialogoEmpleado extends javax.swing.JDialog {
     public float getSalario() {
         return Float.parseFloat(this.tSalario.getText());
     }
-
-    public int mostrar() {
-       opcion=CANCELAR;
+    public int getHoras(){
+        return (int)(this.sHoras.getValue());
+    }
+   public int mostrar() {
+        opcion = CANCELAR;
+        tDni.setText("");
+        tNombre.setText("");
+        sHoras.setValue(0);
         setVisible(true);
         return opcion;
     }
@@ -228,10 +264,12 @@ public class DialogoEmpleado extends javax.swing.JDialog {
     private javax.swing.JButton bAceptar;
     private javax.swing.JButton bCancelar;
     private javax.swing.JLabel lDni;
+    private javax.swing.JLabel lHoras;
     private javax.swing.JLabel lNombre;
     private javax.swing.JLabel lSalario;
     private javax.swing.JLabel lTipo;
     private javax.swing.JComboBox<String> liTipo;
+    private javax.swing.JSpinner sHoras;
     private javax.swing.JTextField tDni;
     private javax.swing.JTextField tNombre;
     private javax.swing.JTextField tSalario;
