@@ -9,6 +9,7 @@ import controlador.Controlador;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
 import modelo.Empleado;
 
 /**
@@ -45,13 +46,13 @@ public class Ventana extends javax.swing.JFrame {
         lTipo = new javax.swing.JLabel();
         liTipo = new javax.swing.JComboBox<>();
         lSalario = new javax.swing.JLabel();
-        tSalario = new javax.swing.JTextField();
         lIngresos = new javax.swing.JLabel();
         tIngresos = new javax.swing.JTextField();
         bBorrar = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
         lHoras = new javax.swing.JLabel();
         sHoras = new javax.swing.JSpinner();
+        tSalario = new javax.swing.JFormattedTextField();
         panelListado = new javax.swing.JPanel();
         bListarEmpleados = new javax.swing.JButton();
         lOrder = new javax.swing.JLabel();
@@ -98,8 +99,6 @@ public class Ventana extends javax.swing.JFrame {
 
         lSalario.setText("SALARIO");
 
-        tSalario.setEditable(false);
-
         lIngresos.setText("INGRESOS");
 
         tIngresos.setEditable(false);
@@ -110,12 +109,24 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         bBorrar.setText("BORRAR");
+        bBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBorrarActionPerformed(evt);
+            }
+        });
 
         bModificar.setText("MODIFICAR");
+        bModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bModificarActionPerformed(evt);
+            }
+        });
 
         lHoras.setText("HORAS");
 
         sHoras.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        tSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
@@ -149,9 +160,9 @@ public class Ventana extends javax.swing.JFrame {
                                     .addComponent(lTipo, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tSalario)
-                                    .addComponent(liTipo, 0, 136, Short.MAX_VALUE)
-                                    .addComponent(sHoras))))))
+                                    .addComponent(liTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(sHoras)
+                                    .addComponent(tSalario))))))
                 .addContainerGap())
         );
         panelDatosLayout.setVerticalGroup(
@@ -177,7 +188,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lHoras))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lIngresos)
                     .addComponent(tIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -202,6 +213,7 @@ public class Ventana extends javax.swing.JFrame {
         gBotones.add(bOrderDni);
         bOrderDni.setSelected(true);
         bOrderDni.setText("DNI");
+        bOrderDni.setActionCommand("dni");
         bOrderDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bOrderDniActionPerformed(evt);
@@ -210,23 +222,19 @@ public class Ventana extends javax.swing.JFrame {
 
         gBotones.add(bOrderNombre);
         bOrderNombre.setText("NOMBRE");
+        bOrderNombre.setActionCommand("nombre");
 
         gBotones.add(bOrderIngresos);
         bOrderIngresos.setText("INGRESOS");
+        bOrderIngresos.setActionCommand("ingresos");
+        bOrderIngresos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bOrderIngresosActionPerformed(evt);
+            }
+        });
 
         etm=new EmpleadoTableModel();
         tablaEmpleados.setModel(etm);
-        tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "DNI", "NOMBRE", "SALARIO", "HORAS", "INGRESOS"
-            }
-        ));
         jScrollPane1.setViewportView(tablaEmpleados);
 
         javax.swing.GroupLayout panelListadoLayout = new javax.swing.GroupLayout(panelListado);
@@ -250,7 +258,7 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(panelListadoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         panelListadoLayout.setVerticalGroup(
             panelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,7 +335,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelListado, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(panelListado, javax.swing.GroupLayout.PREFERRED_SIZE, 399, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -369,7 +377,7 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (this.dialogo.mostrar() == DialogoEmpleado.ACEPTAR) {
             mostrarDni(dialogo.getDni());
-           mostrarNombre(dialogo.getNombre());
+            mostrarNombre(dialogo.getNombre());
             mostrarSalario(dialogo.getSalario());
             mostrarHoras(dialogo.getHoras());
             mostrarTipo(dialogo.getTipo());
@@ -379,17 +387,35 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bListarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bListarEmpleadosActionPerformed
         // TODO add your handling code here:
-        
+         
     }//GEN-LAST:event_bListarEmpleadosActionPerformed
 
     private void miBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miBuscarActionPerformed
         // TODO add your handling code here:
-        String dni=JOptionPane.showInputDialog("Introduce el dni del Empleado a buscar");
-        if(dni!=null){
-        limpiarCampos();
+        String dni = JOptionPane.showInputDialog("Introduce el dni del Empleado a buscar");
+        if (dni != null) {
+            limpiarCampos();
             mostrarDni(dni);
         }
     }//GEN-LAST:event_miBuscarActionPerformed
+
+    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
+        // TODO add your handling code here:
+        if(this.tDni.getText().trim().length()>0){
+            if (JOptionPane.showConfirmDialog(this, "¿Seguro?") == JOptionPane.OK_OPTION) {
+                controlador.borrarEmpleado();
+                limpiarCampos();
+            }
+        }
+    }//GEN-LAST:event_bBorrarActionPerformed
+
+    private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bModificarActionPerformed
+
+    private void bOrderIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrderIngresosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bOrderIngresosActionPerformed
 
     public String getTipo() {
         return this.liTipo.toString();
@@ -404,14 +430,16 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     public float getSalario() {
-        return Float.parseFloat(this.tSalario.getText());
+        return ((Number)this.tSalario.getValue()).floatValue();
     }
 
-    public String getArchivo(){
-    return selectorFicheros.getSelectedFile().getAbsolutePath();
+    public String getArchivo() {
+        return selectorFicheros.getSelectedFile().getAbsolutePath();
     }
-   /* public String getOrden(){
-    }*/
+
+     public String getOrden(){
+         return gBotones.getSelection().getActionCommand();
+    }
     public void mostrarTipo(String tipo) {
 
     }
@@ -425,11 +453,11 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     public void mostrarSalario(float salario) {
-        this.tSalario.setText(Float.toString(salario));
+        this.tSalario.setValue(salario);
     }
 
     public void mostrarHoras(int horas) {
-        this.sHoras.setValue(Integer.toString(horas));
+        this.sHoras.setValue(horas);
     }
 
     public void mostrarIngresos(float ingresos) {
@@ -446,7 +474,7 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     public int getHoras() {
-        return (int)sHoras.getValue();
+        return (int) sHoras.getValue();
     }
 
     //metodo que permite fijar el controlador
@@ -464,6 +492,9 @@ public class Ventana extends javax.swing.JFrame {
         setVisible(true);
     }
 
+    private void seleccionadoEmpleado(ListSelectionEvent e){
+    
+    }
     /**
      * @param args the command line arguments
      */
@@ -531,7 +562,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField tDni;
     private javax.swing.JTextField tIngresos;
     private javax.swing.JTextField tNombre;
-    private javax.swing.JTextField tSalario;
+    private javax.swing.JFormattedTextField tSalario;
     private EmpleadoTableModel etm;
     private javax.swing.JTable tablaEmpleados;
     // End of variables declaration//GEN-END:variables

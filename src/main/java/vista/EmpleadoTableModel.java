@@ -51,9 +51,13 @@ class EmpleadoTableModel extends AbstractTableModel{
                             o=((EmpleadoEventual)e).getSalarioHora();
                             }
            break;
-           case 3:o=null;
+           case 3:if(e instanceof EmpleadoFijo){
+                        o=0;
+                    }else{
+                            o=((EmpleadoEventual)e).getHoras();
+                            }
            break;
-           case 4: o=null;
+           case 4: o=e.ingresos();
         }
         return o;
     }
@@ -68,11 +72,11 @@ class EmpleadoTableModel extends AbstractTableModel{
             break;
             case 1: clase=String.class;
             break;
-            case 2: clase=float.class;
+            case 2: clase=Float.class;
             break;
-            case 3:clase=int.class;
+            case 3:clase=Integer.class;
             break;
-            case 4:clase=float.class;
+            case 4:clase=Float.class;
         }
                return clase;
     }
